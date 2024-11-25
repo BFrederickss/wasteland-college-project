@@ -21,16 +21,18 @@ to do:
 
 """
 
-from wasteland import characters, NPC, helper, player, world
+from wasteland import *
+from world.world import world
+
 
 # game class that will run the game
 # its here for now, as of 25th November, will not do a lot of things to it
 # right now, but will add more to it as the game progresses.
-class game:
+class Game:
     def __init__(self):
-        self._player = player()
+        self._player = Player()
         self._world = world()
-        self._helpers = [helper("John"), helper("Mary"), helper("Bob")]
+        self._helpers = [Helper("Xavier")]
         self._npc = NPC("You're better off running away from this acursed land")
 
     def start(self):
@@ -42,8 +44,9 @@ class game:
         print("")
 
         while True:
+
             print("What do you want to do?")
-            print("1. Look around")
+            print("1. Look at the map")
             print("2. Talk to someone")
             print("3. Check your status")
             print("4. Quit")
@@ -52,10 +55,10 @@ class game:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                print("You look around and see nothing but dust and sand")
-                if self._player.hunger < 5:
+                print("You look around and see rotten walls and fungus around the room")
+                if self._player.hungerBar < 5:
                     print("You feel hungry")
-                if self._player.thirst < 5:
+                if self._player.thirstBar < 5:
                     print("You feel thirsty")
                 print("")
 

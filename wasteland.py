@@ -14,7 +14,8 @@ Updates:
             get through the level. Made a separate file to make the game work. Added a world
             class that will show the player where they are and where they can go. Added a quest
             mechanic that will help the player get through the level. Added a clue mechanic that
-            will help the player get through the level.
+            will help the player get through the level. moved world class and their own levels
+            to a separate file for now, work mostly done on the abandoned_house file.
 
 to do:
 survival mechanic(DONE): player has to survive in this land by trying to find water and food
@@ -24,13 +25,11 @@ clues(add more clues): getting the clues or set pieces so the portal activates a
 
 """
 
-from abc import ABC, abstractmethod
 import random as rnd
 import time
 
 
-
-class characters:
+class Characters:
     def __init__(self,name, dialogue):
         self._name = name
         self._dialogue = dialogue
@@ -46,7 +45,7 @@ class characters:
         return interaction
 
 
-class NPC(characters):
+class NPC(Characters):
     def __init__(self, dialogue):
         super(NPC, self).__init__()
         self._dialogue = dialogue
@@ -66,9 +65,9 @@ class NPC(characters):
 
 # more important characters
 # they will help the player get through the level
-class helper(characters):
+class Helper(Characters):
     def __init__(self, name, dialogue):
-        super(helper, self).__init__(name, dialogue)
+        super(Helper, self).__init__(name, dialogue)
         self._name = "dimitri"
 
     def __repr__(self):
@@ -77,18 +76,19 @@ class helper(characters):
     def provide_clue(self):
         clue = "You should go to the old church, there might be something there that will help you"
         print(clue)
-        player.add_clue(clue)
-        player.add_quest("Go to the old church, find gold Belarusian coin")
+        Player.add_clue(clue)
+        Player.add_quest("Go to the old church, find gold Belarusian coin")
         print("If you want another clue, comeback with a golden Belarusian coin. you can go away now...")
 
 
-class player:
+class Player:
     def __init__(self, name):
         self.hungerBar = 10
         self.thirstBar = 10
         self.healthBar = 20
         self._name = name
         self.space = []
+        self.specialspace = []
         self.__clues = []
         self.quest = []
         self._location = "Abandoned house"
@@ -124,6 +124,7 @@ class player:
             time.sleep(300)
 
     # I dont think this is final
+    # death mechanic needs to be worked on
     def death(self):
         while True:
             if self.hungerBar == 0:
@@ -136,12 +137,24 @@ class player:
                 print("You have died")
                 break
 
-    def add_item(self):
-        ans = input("Would you like to add this item to the inventory? y/n: ")
+    #
+    def add_item(self, item):
+        ans = input(f"Would you like to add {item} to the inventory? y/n: ")
 
         while ans == 'y' or ans == 'n':
             if ans == 'y':
-                self.space.append()
+                self.space.append(item)
+            elif ans == 'n':
+                print("Item discarded")
+            else:
+                print("Wrong answer try again")
+
+    def add_special_item(self, item):
+        ans = input(f"Would you like to add {item} to the inventory? y/n: ")
+
+        while ans == 'y' or ans == 'n':
+            if ans == 'y':
+                self.specialspace.append(item)
             elif ans == 'n':
                 print("Item discarded")
             else:
@@ -164,71 +177,5 @@ class player:
     def view_quest(self):
         for i in self.quest:
             print(i)
-
-# world class that will show the player where they are and where they can go
-# the player will have to find clues to get to the next level
-# the player will have to find food and water to survive
-# the player will have to find items to help them get through the level(this might be implemented)
-class world:
-    def __init__(self):
-        self._world = ["Old church", "Abandoned house", "Quiet farm", "Old nuclear reactor", "Old rotten school"]
-        self._player_location = "Abandoned house"
-
-    def view_world(self):
-        print("You are currently in: ", self._player_location)
-        for i in self._world:
-            print(i)
-
-# locations in the world
-# each location will have items and clues that the player can find
-# ALL ITEMS IN THE WORLDS ARE NOT FINAL!!!!!
-class abandoned_house(world):
-    def __init__(self):
-        super(abandoned_house,self).__init__()
-        self._items = ["Old rusty knife", "Empty bottle", "Old piece of bread", "Old rotten apple"]
-        self._clues = ["Old map", "Old journal", "Old photo", "Old letter"]
-        self._location = "Abandoned house"
-
-
-class old_church(world):
-    def __init__(self):
-        super(old_church, self).__init__()
-        self._items = ["Old cross", "Old bible", "Old candle", "Old chalice"]
-        self._clues = ["Old map", "Old journal", "Old photo", "Old letter"]
-        self._location = "Old church"
-
-class quiet_farm(world):
-    def __init__(self):
-        super(quiet_farm, self).__init__()
-        self._items = ["Old rusty pitchfork", "Old hoe", "Old shovel", "Old rake"]
-        self._clues = ["Old map", "Old journal", "Old photo", "Old letter"]
-        self._location = "Quiet farm"
-
-class old_nuclear_reactor(world):
-    def __init__(self):
-        super(old_nuclear_reactor, self).__init__()
-        self._items = ["Old uranium rod", "Old nuclear reactor manual", "Old nuclear reactor key", "Old nuclear reactor button"]
-        self._clues = ["Old map", "Old journal", "Old photo", "Old letter"]
-        self._location = "Old nuclear reactor"
-
-class old_rotten_school(world):
-    def __init__(self):
-        super(old_rotten_school, self).__init__()
-        self._items = ["Old rusty scissors", "Old chalk", "Old ruler", "Old pen"]
-        self._clues = ["Old map", "Old journal", "Old photo", "Old letter"]
-        self._location = "Old rotten school"
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
