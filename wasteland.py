@@ -17,6 +17,11 @@ Updates:
             will help the player get through the level. moved world class and their own levels
             to a separate file for now, work mostly done on the abandoned_house file.
 
+26/11/2024: Had to fix some issues with the player class, such as add item function. With the functions i've tested the
+            game is somewhat playable. The player can explore the house and gather items and clues. I think I'll have to
+            tweak the helper class a bit more, as i want to have 3(not final number) helpers that will help the player get
+            through the level.
+
 to do:
 survival mechanic(DONE): player has to survive in this land by trying to find water and food
 
@@ -46,12 +51,12 @@ class Characters:
 
 
 class NPC(Characters):
-    def __init__(self, dialogue):
+    def __init__(self):
         super(NPC, self).__init__()
-        self._dialogue = dialogue
 
-    def __repr__(self):
-        return f"{self._name} {self._dialogue}"
+
+    # def __repr__(self):
+    #   return f"{self._name} {self._dialogue}"
 
     def randomDialogue(self):
         talkList = ["Why are you here? Don't you see its dangerous?", "You're better off running "
@@ -59,26 +64,34 @@ class NPC(Characters):
 
         decide = rnd.randint(1, len(talkList))
 
-        dialogue =  talkList[decide]
+        print(talkList[decide])
 
 
 
 # more important characters
 # they will help the player get through the level
-class Helper(Characters):
+class Helper1(Characters):
     def __init__(self, name, dialogue):
-        super(Helper, self).__init__(name, dialogue)
+        super(Helper1, self).__init__(name, dialogue)
         self._name = "dimitri"
+        self.pl = Player("John")
 
     def __repr__(self):
         return f"{self._name} {self._dialogue}"
 
+    def tutorial(self):
+        print("Welcome wanderer to the wasteland, I am Dimitri, I will help you get through this level")
+        print("You have to find food and water to survive in this land")
+        print("You also have to find clues to get to the next level")
+
     def provide_clue(self):
         clue = "You should go to the old church, there might be something there that will help you"
         print(clue)
-        Player.add_clue(clue)
-        Player.add_quest("Go to the old church, find gold Belarusian coin")
+        self.pl.add_clue(clue)
+        self.pl.add_quest("Go to the old church, find gold Belarusian coin")
         print("If you want another clue, comeback with a golden Belarusian coin. you can go away now...")
+
+
 
 
 class Player:
@@ -95,11 +108,14 @@ class Player:
 
     # Inventory mechanic, not final
     def check_if_full(self):
-        if len(self.space) > 10:
+        if len(self.space) == 10:
             print("You're invetory is full")
 
     # Views the inventory
     def view_invetory(self):
+        if len(self.space) == 0:
+            print("You have no items in your inventory")
+
         for i in self.space:
             print(self.space[i])
 
@@ -139,15 +155,19 @@ class Player:
 
     #
     def add_item(self, item):
+        self.check_if_full()
         ans = input(f"Would you like to add {item} to the inventory? y/n: ")
 
         while ans == 'y' or ans == 'n':
             if ans == 'y':
                 self.space.append(item)
+                break
             elif ans == 'n':
                 print("Item discarded")
+                break
             else:
                 print("Wrong answer try again")
+                ans = input(f"Would you like to add {item} to the inventory? y/n: ")
 
     def add_special_item(self, item):
         ans = input(f"Would you like to add {item} to the inventory? y/n: ")
@@ -155,8 +175,10 @@ class Player:
         while ans == 'y' or ans == 'n':
             if ans == 'y':
                 self.specialspace.append(item)
+                break
             elif ans == 'n':
                 print("Item discarded")
+                break
             else:
                 print("Wrong answer try again")
 
