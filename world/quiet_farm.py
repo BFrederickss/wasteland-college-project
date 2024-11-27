@@ -41,3 +41,109 @@ class quiet_farm(world):
                 break
             else:
                 print("Wrong answer try again")
+
+
+    def barn(self):
+        self._sublocation = "Barn"
+        self._items = ["Bread", "Bottle of vodka", "Belarusian gold coin"]
+
+        decide = input("You look around and see the big stack of wheat, do you want to take a closer look? y/n").lower()
+        while True:
+            if decide == "y":
+                print("You find bread and a bottle of water")
+                self.pl.add_item('Bread')
+                self.pl.add_item("Bottle of water")
+                break
+            elif decide == "n":
+                print("You didn't get closer to the table")
+                break
+            else:
+                print("Wrong answer try again")
+
+        decide = input("You see a garbage bin at the corner, do you want to check it out? y/n").lower()
+        while True:
+            if decide == "y":
+                print("You find a Rusty key and a Map on the floor")
+                self.pl.add_item("Rusty key")
+                self.pl.add_item("Map")
+                break
+            elif decide == "n":
+                print("You didn't the items from the garbage bin")
+                break
+            else:
+                print("Wrong answer try again")
+
+        decide = input("Do you still want to explore the kitchen? y/n").lower()
+        while True:
+            if decide == 'y':
+                continue
+            else:
+                self.explore_house()
+
+
+
+
+
+    def field(self):
+        self._sublocation = "Radioactive wheat field"
+        self._items = ["Rotten apple", "Bottle of piss", "Mysterious Fragment"]
+
+        print("You entered the hall and you don't see much, a pool of piss in the corner and some"
+                       "rats running around the place. You see three items near that corner. A Rotten apple"
+                       ", a Bottle of water and a Mysterious Fragment")
+
+        self.pl.add_item("Rotten apple")
+        self.pl.add_item("Bottle of piss")
+        self.pl.add_special_item("Mysterious Fragment")
+
+        print("There's a door at the end of the hall, do you want to open it? y/n")
+        decide = input().lower()
+        while True:
+            if decide == 'y':
+                print("You tried to open the door, its locked...")
+                break
+            elif decide == 'n':
+                print("You decided to leave the door alone")
+                break
+            else:
+                print("Wrong answer try again")
+
+        print("Theres nothing much in the hall, you decide to move on")
+        self.explore_house()
+
+
+
+    def grave(self):
+        self._sublocation = "Grave"
+        self._items = []
+
+
+        print("You entered the Living Room")
+        print("You see a mysterious figure near the coffe table")
+
+        self.Helper1.tutorial()
+        self.Helper1.provide_clue()
+
+        self.explore_house()
+
+
+
+    def stable(self):
+        self._sublocation = "Stable"
+        self._items = []
+        print("You entered the Basement")
+
+
+        print("You find a secret door in the basement, do you want to open it? y/n")
+        decide = input().lower()
+        while True:
+            if decide == 'y':
+                print("You're out of the house, you can now decide where you want to go")
+                break
+            elif decide == 'n':
+                print("You decide to leave the basement")
+                break
+            else:
+                print("Wrong answer try again")
+
+        return None

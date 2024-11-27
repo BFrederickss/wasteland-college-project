@@ -76,20 +76,19 @@ class Helper1(Characters):
         self._name = "dimitri"
         self.pl = Player("John")
 
-    def __repr__(self):
-        return f"{self._name} {self._dialogue}"
+    # def __repr__(self):
+    #     return f"{self._name} {self._dialogue}"
 
     def tutorial(self):
         print("Welcome wanderer to the wasteland, I am Dimitri, I will help you get through this level")
         print("You have to find food and water to survive in this land")
         print("You also have to find clues to get to the next level")
 
-    def provide_clue(self):
-        clue = "You should go to the old church, there might be something there that will help you"
+    def provide_clue(self, clue, quest, narrative):
         print(clue)
         self.pl.add_clue(clue)
-        self.pl.add_quest("Go to the old church, find gold Belarusian coin")
-        print("If you want another clue, comeback with a golden Belarusian coin. you can go away now...")
+        self.pl.add_quest(quest)
+        print(narrative)
 
 
 
@@ -105,6 +104,10 @@ class Player:
         self.__clues = []
         self.quest = []
         self._location = "Abandoned house"
+        self.__food = ["Bread", "Pure apple", "Ribs"]
+        self.__toxic_food = ["Rotten apple", "Rotten meat", "Rotten bread"]
+        self.__liquid = ["Bottle of water", "Bottle of vodka", "Bottle of beer"]
+        self.__toxic_liquid = ["Bottle of poison", "Bottle of acid", "Bottle of bleach"]
 
     # Inventory mechanic, not final
     def check_if_full(self):
@@ -181,6 +184,35 @@ class Player:
                 break
             else:
                 print("Wrong answer try again")
+
+    def use_item(self, item):
+        print("Which item do you want to use?")
+        for i in self.space:
+            print(i + 1, self.space[i])
+
+        decide = int(input())
+
+        if self.space[decide] in self.__food:
+            if self.hungerBar == 8:
+                self.hungerBar += 2
+                print(f"You have eaten {self.space[decide]}")
+            else:
+                print("You are not hungry")
+
+        if self.space[decide] in self.__toxic_food:
+            self.healthBar -= 2
+            print(f"You have eaten {self.space[decide]}")
+
+        if self.space[decide] in self.__liquid:
+            if self.thirstBar == 8:
+                self.thirstBar += 2
+                print(f"You have drank {self.space[decide]}")
+            else:
+                print("You are not thirsty")
+
+        if self.space[decide] in self.__toxic_liquid:
+            self.healthBar -= 2
+            print(f"You have drank {self.space[decide]}")
 
 
     def review_clues(self):

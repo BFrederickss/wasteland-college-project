@@ -41,3 +41,6 @@ class old_nuclear_reactor(world):
                 break
             else:
                 print("Wrong answer try again")
+
+
+# portal will be here

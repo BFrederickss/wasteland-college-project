@@ -152,7 +152,9 @@ class abandoned_house(world):
         print("You see a mysterious figure near the coffe table")
 
         self.Helper1.tutorial()
-        self.Helper1.provide_clue()
+        self.Helper1.provide_clue("You should go to the old church, there might be something there that will help you",
+                                  "Go to the old church, find gold Belarusian coin",
+                                  "If you want another clue, comeback with a golden Belarusian coin. you can go away now...")
 
         self.explore_house()
 
@@ -162,8 +164,6 @@ class abandoned_house(world):
         self._sublocation = "Basement"
         self._items = []
         print("You entered the Basement")
-
-
         print("You find a secret door in the basement, do you want to open it? y/n")
         decide = input().lower()
         while True:
