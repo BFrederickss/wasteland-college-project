@@ -18,7 +18,7 @@ Updates:
 
 class world:
     def __init__(self):
-        self._world = ["Old church", "Abandoned house", "Quiet farm", "Old nuclear reactor", "Old rotten school"]
+        self._levels = ["Old church", "Abandoned house", "Quiet farm", "Old nuclear reactor", "Old rotten school"]
         self._player_location = "Abandoned house"
 
     def view_world(self):

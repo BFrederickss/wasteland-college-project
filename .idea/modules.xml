@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../oop-project/.idea/oop-project.iml" filepath="$PROJECT_DIR$/../oop-project/.idea/oop-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wasteland-college-project.iml" filepath="$PROJECT_DIR$/.idea/wasteland-college-project.iml" />
     </modules>
   </component>

@@ -23,6 +23,8 @@ to do:
 from wasteland import Helper1
 from wasteland import Player as pl
 from world.world import world
+import time
+
 
 class abandoned_house(world):
     def __init__(self):
@@ -43,6 +45,8 @@ class abandoned_house(world):
         decidelocation = int(input("Where do you want to go? "))
 
         while True:
+            self.pl.call_clock_tick()
+
             if decidelocation == 1:
                 print("Going to the Kitchen")
                 self.kitchen()
@@ -111,9 +115,6 @@ class abandoned_house(world):
                 self.explore_house()
 
 
-
-
-
     def hall(self):
         self._sublocation = "Hall"
         self._items = ["Rotten apple", "Bottle of piss", "Mysterious Fragment"]
@@ -151,10 +152,22 @@ class abandoned_house(world):
         print("You entered the Living Room")
         print("You see a mysterious figure near the coffe table")
 
+        print("")
+        time.sleep(1)
+        print("")
+        time.sleep(1)
+        print("")
+        time.sleep(1)
+        print("Hello wanderer, my name is dimitri, I am here to help you get through the wasteland")
+        print("This land is accursed with radiation and undead creatures, you must be careful")
+        print("I can give you some hints and clues to help you get through this level")
+        print("You have to find food and water to survive in this land")
+        print("You also have to find clues to get to the next level")
+        print("I can give you a clue to help you get through this level")
         self.Helper1.tutorial()
-        self.Helper1.provide_clue("You should go to the old church, there might be something there that will help you",
+        self.Helper1.provide_clue("You should go to the quiet farm, there might be something there that will help you",
                                   "Go to the old church, find gold Belarusian coin",
-                                  "If you want another clue, comeback with a golden Belarusian coin. you can go away now...")
+                                  "If you want to get out of here, comeback with a golden Belarusian coin. you can go away now...")
 
         self.explore_house()
 

@@ -26,8 +26,9 @@ to do:
 """
 
 from wasteland import *
-from world.world import world
+from world.world import world as wd
 from world.abandoned_house import abandoned_house as ah
+from world.quiet_farm import quiet_farm as qf
 
 # game class that will run the game
 # its here for now, as of 25th November, will not do a lot of things to it
@@ -36,9 +37,12 @@ class Game:
     def __init__(self):
         self._player = Player("Player")
 
-        self._world = world()
+        self._wd = wd()
         self._ah = ah()
         self._helpers = [Helper1("Xavier", "I can help you get through this level")]
+        self._qf = qf()
+        self.levels = self._wd._levels
+
 
 
     def start(self):
@@ -62,7 +66,24 @@ class Game:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                print("You look around and see rotten walls and fungus around the room")
+                for i in self._wd._levels[i]:
+                    print(i)
+                print("Where do you want to go?")
+                decide = int(input())
+                while True:
+                    if decide == 1:
+                        print("Going to the abandoned house")
+                        self._ah.explore_house()
+                        break
+                    elif decide == 2:
+                        print("Going to the quiet farm")
+                        self._qf.explore_farm()
+                        break
+                    else:
+                        print("Invalid choice")
+                        print("Where do you want to go?")
+                        decide = int(input())
+
                 if self._player.hungerBar < 5:
                     print("You feel hungry")
                 if self._player.thirstBar < 5:
